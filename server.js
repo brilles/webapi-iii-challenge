@@ -6,7 +6,6 @@ const postsRouter = require("./posts/posts-router.js");
 const server = express();
 
 server.use(express.json());
-server.use(makeUppercase);
 
 server.get("/", (req, res) => {
   res.send(`
@@ -15,7 +14,9 @@ server.get("/", (req, res) => {
 });
 
 // routing
-server.use("/api/users", makeUppercase, usersRouter);
+server.post("/api/users", usersRouter, makeUppercase);
+server.put("/api/users/:id", usersRouter, makeUppercase);
+server.use("/api/users", usersRouter);
 server.use("/api/posts", postsRouter);
 
 function makeUppercase(req, res, next) {
