@@ -7,7 +7,7 @@ const router = express.Router();
 // handles URLs beginning with /api/users
 router.get("/", async (req, res) => {
   try {
-    const users = await Users.get(req.body);
+    const users = await Users.get();
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
