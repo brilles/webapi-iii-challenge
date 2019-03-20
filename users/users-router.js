@@ -12,7 +12,21 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "Error retrieving the users"
+      message: "Error retrieving the users."
+    });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const user = await Users.getById(req.params.id);
+  user
+    ? res.status(200).json(user)
+    : res.status(404).json({ message: "User not found." });
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Error retrieving user."
     });
   }
 });
@@ -24,7 +38,7 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "Error adding the user"
+      message: "Error adding the user."
     });
   }
 });
