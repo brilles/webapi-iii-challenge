@@ -10,8 +10,9 @@ router.get("/", async (req, res) => {
     const posts = await Posts.get();
     res.status(200).json(posts);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
-      message: "Error retrieving the posts"
+      message: "Error retrieving the posts."
     });
   }
 });
@@ -21,8 +22,9 @@ router.get("/:id", async (req, res) => {
     const userPosts = await Posts.getById(req.params.id);
     res.status(200).json(userPosts);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
-      message: "Error retrieving the posts"
+      message: "Error retrieving the posts."
     });
   }
 });
@@ -32,8 +34,23 @@ router.post("/", async (req, res) => {
     const post = await Posts.insert(req.body);
     res.status(201).json(post);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
-      message: "Error adding the post"
+      message: "Error adding the post."
+    });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const postId = await Posts.remove(req.params.id);
+    postId
+      ? res.status(200).json({ message: "The post has been removed." })
+      : res.status(404).json({ message: "The post could not be found." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Error removing the post."
     });
   }
 });
