@@ -16,4 +16,15 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const userPosts = await Posts.getById(req.params.id);
+    res.status(200).json(userPosts);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error retrieving the user posts"
+    });
+  }
+});
+
 module.exports = router;
