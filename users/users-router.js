@@ -18,15 +18,30 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const user = await Users.getById(req.params.id);
-  user
-    ? res.status(200).json(user)
-    : res.status(404).json({ message: "User not found." });
   try {
+    const user = await Users.getById(req.params.id);
+    user
+      ? res.status(200).json(user)
+      : res.status(404).json({ message: "User not found." });
   } catch (error) {
     console.log(error);
     res.status(500).json({
       message: "Error retrieving user."
+    });
+  }
+});
+
+router.get("/:id/posts", async (req, res) => {
+  try {
+    const userPosts = await Users.getUserPosts(req.params.id);
+
+    userPosts[0]
+      ? res.status(200).json(userPosts)
+      : res.status(404).json({ message: "User post's not found." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Error retrieving user's posts"
     });
   }
 });
