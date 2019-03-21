@@ -20,7 +20,9 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const userPosts = await Posts.getById(req.params.id);
-    res.status(200).json(userPosts);
+    userPosts
+      ? res.status(200).json(userPosts)
+      : res.status(404).json({ message: "The post could not be found." });
   } catch (error) {
     console.log(error);
     res.status(500).json({
